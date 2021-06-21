@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -21,8 +22,9 @@ namespace UploadFilesServer.Controllers
         public async Task<IActionResult> UploadAsync()
         {
             try
-            {
-                var file = Request.Form.Files[0];
+            {                
+                var formCollection = await Request.ReadFormAsync();
+                var file = formCollection.Files.First();
 
                 if (file.Length > 0)
                 {
